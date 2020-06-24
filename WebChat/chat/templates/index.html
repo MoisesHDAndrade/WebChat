@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block main %}
 <div class="container">
+	<div class="alert alert-danger" role="alert">
+  		
+	</div>
 	<h2 class="text-center">Choose your chat room</h2>
 	<div class="mb-3">
 	<label for="room_name" class="form-label">Room Name</label>
@@ -8,5 +11,26 @@
 	<button class="btn btn-primary" id="chat-button">Enter Room</button>
 </div>
 </div>
-
 {% endblock main %}
+
+{% block js %}
+	<script type="text/javascript">
+		document.querySelector('#room_name').focus();
+		document.querySelector('#room_name').onkeyup = function(event){
+			if(event.keyCode === 13){
+				document.querySelector('#chat-button').click();
+			}
+		};
+		document.querySelector('#chat-button').onclick = function(event){
+			var room_name = document.querySelector('#room_name').value;
+			if(room_name){
+				window.location.pathname = '/chat/' + room_name + '/';
+			}
+			else{
+				//document.querySelector('.alert').value = ""
+				alert('Please inform the chat room name');
+				document.querySelector('#room_name').focus();
+			}
+		};
+	</script>
+{% endblock js %}

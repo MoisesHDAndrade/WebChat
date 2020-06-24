@@ -1,0 +1,50 @@
+{%extends 'base.html'%}
+
+{%block main%}
+	<div class="container">
+		<div class="mb-3">
+			<label for="room" class="form-label">Room Chat</label>
+			<textarea class="form-control" id="room" rows="3"></textarea>
+		</div>
+		<div class="mb-3">
+			<label for="my_room" class="form-label">Example textarea</label>
+			<input type="text" class="form-control" id="my_room">
+		</div>
+		<div class="mb-3">
+			<input type="button" id="room-button" class="btn btn-primary" name="" value="Send">
+		</div>									
+	</div>
+{%endblock main%}
+
+{% block js %}
+
+<script type="text/javascript">
+	var room_name = {{room_name_json}};
+	var chatSocket = new WebSocket(
+		'ws://'+window.location.host + '/ws/chat/' + room_name +'/');
+
+	chatSocket.onmessage = function(event){
+		var edata = JSON.parse(event.data);
+		var message = edata['message'];
+		document.querySelector('#room').value += (message + '\n');
+	};
+	chatSocket.onclose = function(event){
+		console.error('webchat closed')
+	};
+	document.querySelector('#my_room').focus();
+	document.querySelector('#my_room').onkeyup = function(event){
+		if(event.keyCode === 13) {
+			document.querySelector('#room-button').click();
+		}
+	};
+	document.querySelector('#room-button').onclick = function(event){
+		var messageInput = document.querySelector('#my_room');
+		var messageRoom = messageInput.value;
+		chatSocket.send(JSON.stringfy({
+			'message':message
+		}));
+		messageInput.value = '';
+	};
+</script>
+	
+{% endblock js %}
