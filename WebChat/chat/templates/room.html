@@ -40,8 +40,8 @@
 	document.querySelector('#room-button').onclick = function(event){
 		var messageInput = document.querySelector('#my_room');
 		var messageRoom = messageInput.value;
-		chatSocket.send(JSON.stringfy({
-			'message':message
+		chatSocket.send(JSON.stringify({
+			'message': messageRoom
 		}));
 		messageInput.value = '';
 	};
