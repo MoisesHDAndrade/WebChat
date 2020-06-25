@@ -11,3 +11,7 @@ if you want to try in other devices inside your local network run "python manage
 
 ## Improving the template
 You can download and choose your favorite template for web chat or make it by your own
+
+
+https://channels.readthedocs.io/en/latest/tutorial/part_1.html
+https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04-pt
